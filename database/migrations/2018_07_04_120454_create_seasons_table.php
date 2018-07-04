@@ -19,8 +19,7 @@ class CreateSeasonsTable extends Migration
             $table->foreign('serial_id')->references('id')->on('serials')->onDelete('cascade');
             $table->string('title');
             $table->string('img');
-            $table->string('short_desc');
-            $table->string('all_desc');
+            $table->text('short_desc');
             $table->date('date_start');
             $table->timestamps();
         });

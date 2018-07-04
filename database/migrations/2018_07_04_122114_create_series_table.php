@@ -19,14 +19,14 @@ class CreateSeriesTable extends Migration
             $table->foreign('season_id')->references('id')->on('seasons')->onDelete('cascade');
             $table->string('title');
             $table->string('img');
-            $table->string('short_desc');
+            $table->text('short_desc');
             $table->string('video');
             $table->date('date_start');
             $table->timestamps();
         });
     }
 
-    /**
+    /**text
      * Reverse the migrations.
      *
      * @return void

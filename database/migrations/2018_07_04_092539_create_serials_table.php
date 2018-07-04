@@ -17,10 +17,10 @@ class CreateSerialsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('img');
-            $table->string('short_desc');
-            $table->string('all_desc');
-            $table->char('director', 100);
-            $table->string('actors');
+            $table->text('short_desc');
+            $table->text('all_desc');
+            $table->text('director');
+            $table->text('actors');
             $table->date('date_start');
             $table->timestamps();
         });

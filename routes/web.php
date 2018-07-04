@@ -12,7 +12,8 @@
 */
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function(){
-    Route::resource('/', 'SerialController');
+    Route::get('/','AdminController@index')->name('admin.index');
+    Route::resource('/serial', 'SerialController',['as' => 'admin']);
 });
 
 

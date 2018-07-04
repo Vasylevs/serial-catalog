@@ -4,20 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Serial;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SerialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('admin.serial_catalog', [
-            'serials' => Serial::paginate(8)
-        ]);
+
+    public function index(){
+        return redirect('admin.index');
     }
 
     /**
@@ -27,7 +21,7 @@ class SerialController extends Controller
      */
     public function create()
     {
-        return view('admin.add_serial');
+        return view('admin.serial.add_serial');
     }
 
     /**
@@ -38,7 +32,26 @@ class SerialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        $validation = Validator::make($data,[
+            'title' => 'required'
+        ]);
+
+        if($validation->fails()){
+            return redirect()->route('create')->withErrors($validation)->withInput();
+        }
+
+        if($request->hasFile('img')){
+            $file = $request->file('img');
+            $data['img'] = $file->getClientOriginalName();
+            $file->move(public_path() . '/assets/img',$data['img']);
+        }
+
+        $serial = new Serial();
+        $serial->fill($data);
+        if($serial->save()){
+            return redirect('admin.index')->with('status','Сериал добавлен');
+        }
     }
 
     /**
@@ -60,7 +73,7 @@ class SerialController extends Controller
      */
     public function edit(Serial $serial)
     {
-        //
+        return view('admin.serial.edit',['serial' => $serial]);
     }
 
     /**
@@ -72,7 +85,8 @@ class SerialController extends Controller
      */
     public function update(Request $request, Serial $serial)
     {
-        //
+        $serial->update($request->all());
+        return redirect()->route('admin.serial.edit',$serial->id);
     }
 
     /**

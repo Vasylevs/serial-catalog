@@ -4,13 +4,21 @@
 
     <div class="container">
 
+        @if(isset($status))
+
+            <div class="alert alert-success" role="alert">
+                {{$status}}
+            </div>
+
+        @endif
+
         @component('admin.components.breadcrumb')
             @slot('title')Список сериалов@endslot
         @endcomponent
 
         <div class="row">
             <div class="col-12 text-right">
-                <a class="btn btn-success" href="{{route('create')}}" role="button">Добавить сериал</a>
+                <a class="btn btn-success" href="{{route('admin.serial.create')}}" role="button">Добавить сериал</a>
             </div>
             <div class="col-12 mt-2">
                 <table class="table table-hover">
@@ -25,12 +33,12 @@
                     <tbody>
                         @forelse($serials as $serial)
                             <tr>
-                                <th scope="row"><img src="{{asset($serial->img)}}" alt=""></th>
-                                <td>{{asset($serial->title)}}</td>
-                                <td>{{asset($serial->short_desc)}}</td>
+                                <th scope="row"><img style="width: 75px;" src="{{'/assets/img/'.$serial->img}}" alt=""></th>
+                                <td><h3>{{$serial->title}}</h3></td>
+                                <td>{{$serial->short_desc}}</td>
                                 <td>
-                                    <a class="btn btn-danger mb-2" href="{{route('update')}}" role="button">Редактировать</a>
-                                    <a class="btn btn-primary" href="{{route('destroy')}}" role="button">Удалить</a>
+                                    <a class="btn btn-primary mb-2" href="{{route('admin.serial.edit',$serial->id)}}" role="button">Редактировать</a>
+                                    <a class="btn btn-danger" href="{{route('admin.serial.destroy',$serial->id)}}" role="button">Удалить</a>
                                 </td>
                             </tr>
                         @empty
