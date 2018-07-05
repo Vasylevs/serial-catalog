@@ -11,6 +11,13 @@
 |
 */
 
+//SITE
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/serial/{id}', 'HomeController@serial')->name('serial');
+Route::get('/serial/season/{id}', 'HomeController@season')->name('season');
+Route::get('/serial/season/seria/{id}', 'HomeController@seria')->name('seria');
+
+//ADMIN
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function(){
     Route::get('/','AdminController@index')->name('admin.index');
     Route::resource('/serial', 'SerialController',['as' => 'admin']);
@@ -18,11 +25,5 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::resource('/serie', 'SeriaController',['as' => 'admin']);
 });
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
