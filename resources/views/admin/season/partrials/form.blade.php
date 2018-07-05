@@ -1,6 +1,6 @@
 <input type="hidden" name="serial_id" value="{{$serial->id}}">
 <div class="form-group">
-    <label for="title">Название сериала</label>
+    <label for="title">Название сезона</label>
     <input type="text" value="@if(isset($season->id)) {{$season->title}} @endif" name="title" class="form-control" id="title" aria-describedby="textHelp" placeholder="Введите название сериала" required>
 </div>
 <div class="form-group">

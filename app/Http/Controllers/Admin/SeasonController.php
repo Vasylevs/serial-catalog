@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Season;
-use App\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -67,7 +66,6 @@ class SeasonController extends Controller
         if($season->save()){
             return redirect("admin/serial/{$data['serial_id']}}/edit")->with('status','Сезон добавлен');
         }
-        dump($request);
     }
 
     /**
@@ -90,7 +88,8 @@ class SeasonController extends Controller
     public function edit(Season $season)
     {
         $serial = DB::table('serials')->where('id', "{$season->serial_id}")->first();
-        return view('admin.season.edit',['serial' => $serial, 'season' => $season]);
+        $serias = DB::table('series')->where('season_id',$season->id)->paginate(20);
+        return view('admin.season.edit',['serial' => $serial, 'season' => $season, 'serias' => $serias]);
     }
 
     /**
