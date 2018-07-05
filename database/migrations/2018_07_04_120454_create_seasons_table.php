@@ -18,9 +18,9 @@ class CreateSeasonsTable extends Migration
             $table->unsignedInteger('serial_id');
             $table->foreign('serial_id')->references('id')->on('serials')->onDelete('cascade');
             $table->string('title');
-            $table->string('img');
-            $table->text('short_desc');
-            $table->date('date_start');
+            $table->string('img')->nullable($value = true);
+            $table->text('short_desc')->nullable($value = true);
+            $table->date('date_start')->nullable($value = true);
             $table->timestamps();
         });
     }

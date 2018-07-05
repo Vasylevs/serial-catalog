@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SerialController extends Controller
 {
 
     public function index(){
-        return redirect('admin.index');
+        return redirect()->route('admin.index');
     }
 
     /**
@@ -38,7 +39,7 @@ class SerialController extends Controller
         ]);
 
         if($validation->fails()){
-            return redirect()->route('create')->withErrors($validation)->withInput();
+            return redirect()->route('admin.serial.create')->withErrors($validation)->withInput();
         }
 
         if($request->hasFile('img')){
@@ -50,7 +51,7 @@ class SerialController extends Controller
         $serial = new Serial();
         $serial->fill($data);
         if($serial->save()){
-            return redirect('admin.index')->with('status','Сериал добавлен');
+            return redirect()->route('admin.index')->with('status','Сериал добавлен');
         }
     }
 
@@ -73,7 +74,11 @@ class SerialController extends Controller
      */
     public function edit(Serial $serial)
     {
-        return view('admin.serial.edit',['serial' => $serial]);
+        $seasons = DB::table('seasons')->where('serial_id', $serial->id)->get();
+        return view('admin.serial.edit',[
+            'serial' => $serial,
+            'seasons' => $seasons
+        ]);
     }
 
     /**
@@ -97,6 +102,7 @@ class SerialController extends Controller
      */
     public function destroy(Serial $serial)
     {
-        //
+        $serial->delete();
+        return redirect()->route('admin.index');
     }
 }

@@ -16,12 +16,12 @@ class CreateSerialsTable extends Migration
         Schema::create('serials', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('img');
-            $table->text('short_desc');
-            $table->text('all_desc');
-            $table->text('director');
-            $table->text('actors');
-            $table->date('date_start');
+            $table->string('img')->nullable($value = true);
+            $table->text('short_desc')->nullable($value = true);
+            $table->text('all_desc')->nullable($value = true);
+            $table->text('director')->nullable($value = true);
+            $table->text('actors')->nullable($value = true);
+            $table->date('date_start')->nullable($value = true);
             $table->timestamps();
         });
     }

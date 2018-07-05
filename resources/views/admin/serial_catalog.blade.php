@@ -38,7 +38,12 @@
                                 <td>{{$serial->short_desc}}</td>
                                 <td>
                                     <a class="btn btn-primary mb-2" href="{{route('admin.serial.edit',$serial->id)}}" role="button">Редактировать</a>
-                                    <a class="btn btn-danger" href="{{route('admin.serial.destroy',$serial->id)}}" role="button">Удалить</a>
+                                    <form onsubmit="if(confirm('Удалить?')){return true}else{return false}"
+                                          action="{{route('admin.serial.destroy',$serial->id)}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input class="btn btn-danger" type="submit" value="Удалить">
+                                    </form>
                                 </td>
                             </tr>
                         @empty

@@ -18,10 +18,10 @@ class CreateSeriesTable extends Migration
             $table->unsignedInteger('season_id');
             $table->foreign('season_id')->references('id')->on('seasons')->onDelete('cascade');
             $table->string('title');
-            $table->string('img');
-            $table->text('short_desc');
-            $table->string('video');
-            $table->date('date_start');
+            $table->string('img')->nullable($value = true);
+            $table->text('short_desc')->nullable($value = true);
+            $table->string('video')->nullable($value = true);
+            $table->date('date_start')->nullable($value = true);
             $table->timestamps();
         });
     }
